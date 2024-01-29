@@ -16,12 +16,16 @@ async function getUpdate(type, url, filename)
     }
 
     /* fetch */
-    const res = await fetch(url);
-    if (res.status != 200) return;
-    const data = await res.json();
-    if (!data) return;
-    if (data.update == cacheBoards.update) return; /* not updated */
+    try{
+        const res = await fetch(url);
+        if (!res.ok) return;
+        const data = await res.json();
+    } catch (error) {
+        return;
+    }
+    if (data?.update == cacheBoards.update) return; // not updated
 
+    /* render and cache */
     store.dispatch({
         type: type,
         payload: data.data
