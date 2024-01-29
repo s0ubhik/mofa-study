@@ -2,18 +2,18 @@ import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import theme from '../services/theme';
-import { getBoard } from '../redux/actions';
+import { getSubjects } from '../redux/actions';
 import {useSelector} from 'react-redux';
 import React, { useEffect } from 'react';
 
-const selectClass = (board) => {
-  
-  console.log(board);
+const selectClass = (board, sclass) => {
+  getSubjects(board.toLowerCase(), sclass)
+  console.log(board + " " + sclass);
 }
 
 const SClass = ({name, color=theme.accent, sclass, board}) => {
   return (
-  <TouchableWithoutFeedback onPress={() => selectClass(board + " " +sclass)}>
+  <TouchableWithoutFeedback onPress={() => selectClass(board,sclass)}>
   <View style={{...styles.sclass, backgroundColor: color}}>
     <Text style={styles.className}>{name}</Text>
     <Icon name="angle-right" size={30} color="#000"/>
@@ -31,7 +31,7 @@ function Classes({ navigation, route }) {
   for (const key in board.class) {
     const _class = board.class[key];
     RenderedClasses.push(
-      <SClass key={key} name={"Class "+_class} board={route.params?.board} sclass={_class} color={col ? '#C2D6DB' : '#8EDF80'}/>
+      <SClass key={key} name={"Class "+_class} board={route.params?.board} sclass={_class} color={col ? theme.class_alter1 : theme.class_alter2}/>
     );
     col = !col;
   }

@@ -5,6 +5,7 @@ import * as fs from '../services/filesystem';
 
 async function getUpdate(type, url, filename)
 {
+    /* render cache */
     var cacheBoards = {update: ""};
     if ((await fs.exists(filename, 'cache'))){
         cacheBoards = await fs.read(filename, 'cache', true);
@@ -14,6 +15,7 @@ async function getUpdate(type, url, filename)
         });
     }
 
+    /* fetch */
     const res = await fetch(url);
     if (res.status != 200) return;
     const data = await res.json();
@@ -39,5 +41,6 @@ export const getChapters = async (board, sclass, subject) =>
 
 export async function getFile(fileID)
 {
-
+    /* download document */
+    // TODO: complete
 }
